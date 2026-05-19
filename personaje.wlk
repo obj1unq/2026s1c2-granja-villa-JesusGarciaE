@@ -1,11 +1,11 @@
 import wollok.game.*
+import cultivos.*
 
 object personaje {
 	var property position = game.center()
 	const property image = "fplayer.png"
 	method sembrarTomaco(){
-		//game.addVisual(new Tomaco().image())
-
+		
 	}
 	method sembrarTrigo(){
 
@@ -19,7 +19,7 @@ object personaje {
 	}
 	method regar(planta){
 	//	self.validarPlanta()
-		planta.regado()
+		planta.crecer()
 	 }
 	// method validarPLanta(){
 	// 	if(self.position() = ))
