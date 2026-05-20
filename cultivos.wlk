@@ -10,6 +10,9 @@ class Maiz {
 	method crecer(){
 		imagenAMostrar = "corn_adult.png"
 	}
+	method retirar(){
+		game.removeVisual(Maiz)
+	}
 }
 
 class Trigo {
@@ -19,15 +22,21 @@ class Trigo {
 		return imagenAMostrar
 	}
 	method crecer() {
-		imagenAMostrar = "wheat_" + cantidadDeRiegos.cantidadDeRiegos()+  ".png"
+		imagenAMostrar = "wheat_" + cantidadDeRiegos.cantidadDeRiegos() + ".png"
+	}
+	method retirar(){
+		game.removeVisual(Trigo)
 	}
 }
 
 object cantidadDeRiegos {
 	var property cantidad = 0
-	// method aumentar(){
-	// 	cantidad = cantidad + 1
-	// }
+	 method cuentaDeRiegos(){
+		if(cantidad == 3){
+			cantidad = 0
+		}
+	 	else cantidad = cantidad + 1
+	 }
 	method cantidadDeRiegos(){
 		return cantidad
 	}
@@ -39,6 +48,14 @@ class Tomaco {
 		return "tomaco.png"
 	}
 	method crecer(){
-		self.image()
+		if(Tomaco.position() == game.height()) {
+			position = game.at(Tomaco.position().x(), 0)
+		}
+		else  {
+			position = Tomaco.position().y() + 1
+		}
+	}
+	method retirar(){
+		game.removeVisual(Tomaco)
 	}
 }
