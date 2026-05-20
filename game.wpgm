@@ -15,10 +15,10 @@ program farmville {
 	keyboard.a().onPressDo({personaje.mover(izquierda)})	
 	keyboard.s().onPressDo({personaje.mover(abajo)})
 	keyboard.d().onPressDo({personaje.mover(derecha)})
-	// keyboard.m().onPressDo({personaje.sembrar(new Maiz())})
-	// keyboard.t().onPressDo({personaje.sembrar(new Trigo())})
-	// keyboard.o().onPressDo({personaje.sembrar(new Tomaco())})
-	// keyboard.r().onPressDo({personaje.regar(new Maiz())})
+	keyboard.m().onPressDo({personaje.sembrarMaiz()})
+	keyboard.t().onPressDo({personaje.sembrarTrigo()})
+	keyboard.o().onPressDo({personaje.sembrarTomaco()})
+	//keyboard.r().onPressDo({personaje.regar(cultivo)})
 	// //  VISUALES
  	game.addVisualCharacter(personaje)
  	// game.addVisual(new Maiz()) // Se agrega a modo de prueba
