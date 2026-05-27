@@ -11,7 +11,13 @@ class Maiz {
 		imagenAMostrar = "corn_adult.png"
 	}
 	method retirar(){
-		game.removeVisual(Maiz)
+		game.removeVisual(self)
+	}
+	method precio(){
+		return 150 
+	}
+	method esPlanta(){
+		return true
 	}
 }
 
@@ -22,14 +28,23 @@ class Trigo {
 		return imagenAMostrar
 	}
 	method crecer() {
-		imagenAMostrar = "wheat_" + cantidadDeRiegos.cantidadDeRiegos() + ".png"
+		imagenAMostrar = "wheat_" + new CantidadDeRiegos().cantidadDeRiegos() + ".png"
 	}
 	method retirar(){
-		game.removeVisual(Trigo)
+		game.removeVisual(self)
+	}
+	method precio(){
+		if (game.hasVisual(self).image() == "wheat_2.png"){
+			return 100
+		}
+		else return 200
+	}
+	method esPlanta(){
+		return true
 	}
 }
 
-object cantidadDeRiegos {
+class CantidadDeRiegos {
 	var property cantidad = 0
 	 method cuentaDeRiegos(){
 		if(cantidad == 3){
@@ -48,14 +63,30 @@ class Tomaco {
 		return "tomaco.png"
 	}
 	method crecer(){
-		if(Tomaco.position() == game.height()) {
-			position = game.at(Tomaco.position().x(), 0)
+		if(not (self.estaEnBorde())) {
+			self.subir()
+			
 		}
 		else  {
-			position = Tomaco.position().y() + 1
+			self.irAlBorde()
 		}
 	}
+	method estaEnBorde(){
+		return self.position().y() == game.height()-1
+	}
+	method subir(){
+		position = game.at(self.position().x(), self.position().y() + 1)
+	}
+	method irAlBorde(){
+		position = game.at(self.position().x(),0)
+	}
 	method retirar(){
-		game.removeVisual(Tomaco)
+		game.removeVisual(self)
+	}
+	method precio(){
+		return 80
+	}
+	method esPlanta(){
+		return true
 	}
 }

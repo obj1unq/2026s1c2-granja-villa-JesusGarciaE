@@ -4,6 +4,8 @@ import cultivos.*
 object personaje {
 	var property position = game.center()
 	const property image = "fplayer.png"
+	const mochila  =#{}
+	var cantidadDeOro = 0
 	method sembrarTomaco(){
 		game.addVisual(new Tomaco(position = self.position()))
 	}
@@ -17,7 +19,9 @@ object personaje {
 		const nuevaPosicion = direccion.siguiente(position)
 		position = nuevaPosicion
 	}
-	method regar(planta){
+	method regar(){
+		const objetosEnPosicion = game.getObjectsIn(self.position())
+		const planta = objetosEnPosicion.find({objeto => objeto.esPlanta()})
 		self.validarPlanta(planta)
 		planta.crecer()
 	 }
@@ -26,17 +30,50 @@ object personaje {
 			self.error( "no tengo nada para regar ")
 		}
 	 }
-	 method cosechar(planta){
+	 method cosechar(){
+		const objetosEnPosicion = game.getObjectsIn(self.position())
+		const planta = objetosEnPosicion.find({objeto => objeto.esPlanta()})
 		self.validarPlanta2(planta)
 		planta.retirar()
-		self.agregarAMochila()
+		self.agregarAMochila(planta)
 	}
 	method validarPlanta2(planta){
 	 	if(not(self.position() == planta.position())){
 			self.error( "no se puede cosechar")
 		}
 	 }
-	 method agregarAMochila(){
-		
+	 method agregarAMochila(objeto){
+		mochila.add(objeto)
 	 }
+	 method vender(plantasEnMochila){
+		self.validarTienda()
+		cantidadDeOro = cantidadDeOro + self.precioDePLantas()
+		mochila.clear()
+	 }
+	 method validarTienda(){
+	 	if(not(self.position() == tienda.position())){
+			self.error( "no estoy en la tienda")
+		}
+	 }
+	 method precioDePLantas(){
+		return mochila.sum({planta => planta.precio()})
+	}
+	method cantidadDeOro(){
+		return cantidadDeOro
+	}
+	method plantasAVender(){
+		return mochila.size()
+	}
+	method esPlanta(){
+		return false
+
+	}
+}
+object tienda{
+	method image(){
+		return "market.png"
+	}
+	method position(){
+		return game.at(game.width()-1, game.height()-1)
+	}
 }
